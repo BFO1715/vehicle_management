@@ -41,8 +41,7 @@ public class VehicleDealershipManagementSystem {
     }
 
     private static void addVehicle(Scanner scanner) {
-        System.out.println("Enter type of vehicle (car/motorbike):");
-        String type = scanner.nextLine();
+        String type = getValidInput(scanner, new String[]{"car", "motorbike"}, "Enter type of vehicle (car/motorbike):", "Invalid option, please select from options provided.");
 
         System.out.println("Enter make:");
         String make = scanner.nextLine();
@@ -50,8 +49,7 @@ public class VehicleDealershipManagementSystem {
         String model = scanner.nextLine();
         System.out.println("Enter year:");
         int year = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter gearbox type (manual/auto):");
-        String gearboxType = scanner.nextLine();
+        String gearboxType = getValidInput(scanner, new String[]{"manual", "auto"}, "Enter gearbox type (manual/auto):", "Invalid option, please select from options provided.");
         System.out.println("Enter color:");
         String color = scanner.nextLine();
         System.out.println("Enter mileage:");
@@ -60,54 +58,30 @@ public class VehicleDealershipManagementSystem {
         String vin = scanner.nextLine();
 
         if ("car".equalsIgnoreCase(type)) {
-            System.out.println("Enter body type (saloon/estate/hatchback/SUV):");
-            String bodyType = scanner.nextLine();
+            String bodyType = getValidInput(scanner, new String[]{"saloon", "estate", "hatchback", "SUV"}, "Enter body type (saloon/estate/hatchback/SUV):", "Invalid option, please select from options provided.");
 
-            Car car;
+            Car car = null;
             if ("SUV".equalsIgnoreCase(bodyType)) {
                 car = new SUV(make, model, year, gearboxType, color, mileage, vin, bodyType);
-                System.out.println("Add all-wheel drive? (yes/no)");
-                if ("yes".equalsIgnoreCase(scanner.nextLine())) {
+                if (getYesNoInput(scanner, "Add all-wheel drive? (yes/no)")) {
                     ((SUV) car).addAllWheelDrive();
                 }
             } else if ("estate".equalsIgnoreCase(bodyType)) {
                 car = new Estate(make, model, year, gearboxType, color, mileage, vin, bodyType);
-                System.out.println("Add third-row seat? (yes/no)");
-                if ("yes".equalsIgnoreCase(scanner.nextLine())) {
+                if (getYesNoInput(scanner, "Add third-row seat? (yes/no)")) {
                     ((Estate) car).addThirdRowSeat();
                 }
             } else {
                 car = new Car(make, model, year, gearboxType, color, mileage, vin, bodyType);
             }
 
-            System.out.println("Add sat nav? (yes/no)");
-            if ("yes".equalsIgnoreCase(scanner.nextLine())) {
-                car.addSatNav();
-            }
-
-            System.out.println("Add parking sensors? (yes/no)");
-            if ("yes".equalsIgnoreCase(scanner.nextLine())) {
-                car.addParkingSensors();
-            }
-
-            System.out.println("Add a tow bar? (yes/no)");
-            if ("yes".equalsIgnoreCase(scanner.nextLine())) {
-                car.addTowBar();
-            }
-
-            System.out.println("Add a roof rack? (yes/no)");
-            if ("yes".equalsIgnoreCase(scanner.nextLine())) {
-                car.addRoofRack();
-            }
-
+            addCarOptions(scanner, car);
             vehicles[vehicleCount++] = car;
         } else if ("motorbike".equalsIgnoreCase(type)) {
             Motorbike motorbike = new Motorbike(make, model, year, gearboxType, color, mileage, vin);
-            System.out.println("Add luggage box? (yes/no)");
-            if ("yes".equalsIgnoreCase(scanner.nextLine())) {
+            if (getYesNoInput(scanner, "Add luggage box? (yes/no)")) {
                 motorbike.addLuggageBox();
             }
-
             vehicles[vehicleCount++] = motorbike;
         }
 
@@ -137,23 +111,19 @@ public class VehicleDealershipManagementSystem {
         for (int i = 0; i < vehicleCount; i++) {
             if (vehicles[i].vin.equals(vin)) {
                 if (vehicles[i] instanceof Motorbike) {
-                    System.out.println("Do you want to add/remove luggage box? (add/remove/no)");
-                    String choice = scanner.nextLine();
+                    String choice = getValidInput(scanner, new String[]{"add", "remove", "no"}, "Do you want to add/remove luggage box? (add/remove/no)", "Invalid option, please select from options provided.");
                     if ("add".equalsIgnoreCase(choice)) {
                         ((Motorbike) vehicles[i]).addLuggageBox();
                     } else if ("remove".equalsIgnoreCase(choice)) {
                         ((Motorbike) vehicles[i]).removeLuggageBox();
                     }
                 } else if (vehicles[i] instanceof Vehicle) {
-                    System.out.println("Enter new color (or 'no' to skip):");
-                    String color = scanner.nextLine();
+                    String color = getValidInput(scanner, new String[]{"no"}, "Enter new color (or 'no' to skip):", "Invalid option, please select from options provided.");
                     if (!"no".equalsIgnoreCase(color)) {
                         vehicles[i].updateColor(color);
                     }
 
-                    System.out.println("Enter new mileage (or -1 to skip):");
-                    int mileage = scanner.nextInt();
-                    scanner.nextLine(); // Consume the remaining newline
+                    int mileage = getValidIntInput(scanner, "Enter new mileage (or -1 to skip):", "Invalid option, please enter a valid number or -1 to skip.");
                     if (mileage != -1) {
                         vehicles[i].updateMileage(mileage);
                     }
@@ -163,6 +133,51 @@ public class VehicleDealershipManagementSystem {
             }
         }
         System.out.println("Vehicle with VIN " + vin + " not found.");
+    }
+
+    private static void addCarOptions(Scanner scanner, Car car) {
+        if (getYesNoInput(scanner, "Add sat nav? (yes/no)")) {
+            car.addSatNav();
+        }
+        if (getYesNoInput(scanner, "Add parking sensors? (yes/no)")) {
+            car.addParkingSensors();
+        }
+        if (getYesNoInput(scanner, "Add a tow bar? (yes/no)")) {
+            car.addTowBar();
+        }
+        if (getYesNoInput(scanner, "Add a roof rack? (yes/no)")) {
+            car.addRoofRack();
+        }
+    }
+
+    private static boolean getYesNoInput(Scanner scanner, String prompt) {
+        String input = getValidInput(scanner, new String[]{"yes", "no"}, prompt, "Invalid option, please select 'yes' or 'no'.");
+        return "yes".equalsIgnoreCase(input);
+    }
+
+    private static String getValidInput(Scanner scanner, String[] validOptions, String prompt, String errorMessage) {
+        while (true) {
+            System.out.println(prompt);
+            String input = scanner.nextLine();
+            for (String validOption : validOptions) {
+                if (validOption.equalsIgnoreCase(input) || (validOptions.length == 1 && "no".equalsIgnoreCase(input))) {
+                    return input;
+                }
+            }
+            System.out.println(errorMessage);
+        }
+    }
+
+    private static int getValidIntInput(Scanner scanner, String prompt, String errorMessage) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                int input = Integer.parseInt(scanner.nextLine());
+                return input;
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+        }
     }
 }
 
