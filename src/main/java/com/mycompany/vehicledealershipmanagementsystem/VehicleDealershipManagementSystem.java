@@ -38,6 +38,7 @@ public class VehicleDealershipManagementSystem {
         } while (!"3".equals(input));
 
         printVehicles();
+        scanner.close();
     }
 
     private static void addVehicle(Scanner scanner) {
@@ -104,47 +105,39 @@ public class VehicleDealershipManagementSystem {
         }
     }
 
-private static void updateVehicle(Scanner scanner) {
-    System.out.println("Enter the VIN of the vehicle to update:");
-    String vin = scanner.nextLine();
+    private static void updateVehicle(Scanner scanner) {
+        System.out.println("Enter the VIN of the vehicle to update:");
+        String vin = scanner.nextLine();
 
-    for (int i = 0; i < vehicleCount; i++) {
-        if (vehicles[i].vin.equals(vin)) {
-            if (vehicles[i] instanceof Motorbike) {
-                String choice = getValidInput(scanner, new String[]{"add", "remove", "no"}, "Do you want to add/remove luggage box? (add/remove/no)", "Invalid option, please select from options provided.");
-                if ("add".equalsIgnoreCase(choice)) {
-                    ((Motorbike) vehicles[i]).addLuggageBox();
-                } else if ("remove".equalsIgnoreCase(choice)) {
-                    ((Motorbike) vehicles[i]).removeLuggageBox();
-                }
-            } else if (vehicles[i] instanceof Vehicle) {
-                System.out.println("Enter new color (or 'no' to skip):");
-                String color = scanner.nextLine();
-                if (!"no".equalsIgnoreCase(color)) {
-                    vehicles[i].updateColor(color);
-                }
-
-                int mileage = -1;
-                boolean validInput = false;
-                while (!validInput) {
-                    try {
-                        System.out.println("Enter new mileage (or -1 to skip):");
-                        mileage = Integer.parseInt(scanner.nextLine());
-                        validInput = true;
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid option, please enter a valid number or -1 to skip.");
+        for (int i = 0; i < vehicleCount; i++) {
+            if (vehicles[i].getVin().equals(vin)) {
+                if (vehicles[i] instanceof Motorbike) {
+                    String choice = getValidInput(scanner, new String[]{"add", "remove", "no"}, "Do you want to add/remove luggage box? (add/remove/no)", "Invalid option, please select from options provided.");
+                    if ("add".equalsIgnoreCase(choice)) {
+                        ((Motorbike) vehicles[i]).addLuggageBox();
+                    } else if ("remove".equalsIgnoreCase(choice)) {
+                        ((Motorbike) vehicles[i]).removeLuggageBox();
                     }
+                } else if (vehicles[i] instanceof Car) {
+                    System.out.println("Enter new color (or 'no' to skip):");
+                    String color = scanner.nextLine();
+                    if (!"no".equalsIgnoreCase(color)) {
+                        vehicles[i].setColor(color);
+                    }
+
+                    System.out.println("Enter new mileage (or -1 to skip):");
+                    int mileage = scanner.nextInt();
+                    if (mileage != -1) {
+                        vehicles[i].setMileage(mileage);
+                    }
+                    scanner.nextLine(); // Clear the buffer
                 }
-                if (mileage != -1) {
-                    vehicles[i].updateMileage(mileage);
-                }
+                System.out.println("Vehicle updated: " + vehicles[i]);
+                return;
             }
-            System.out.println("Vehicle updated: " + vehicles[i]);
-            return;
         }
+        System.out.println("Vehicle with VIN " + vin + " not found.");
     }
-    System.out.println("Vehicle with VIN " + vin + " not found.");
-}
 
     private static void addCarOptions(Scanner scanner, Car car) {
         if (getYesNoInput(scanner, "Add sat nav? (yes/no)")) {
@@ -162,7 +155,11 @@ private static void updateVehicle(Scanner scanner) {
     }
 
     private static boolean getYesNoInput(Scanner scanner, String prompt) {
-        String input = getValidInput(scanner, new String[]{"yes", "no"}, prompt, "Invalid option, please select 'yes' or 'no'.");
+        String input;
+        do {
+            System.out.println(prompt);
+            input = scanner.nextLine();
+        } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
         return "yes".equalsIgnoreCase(input);
     }
 
@@ -171,23 +168,11 @@ private static void updateVehicle(Scanner scanner) {
             System.out.println(prompt);
             String input = scanner.nextLine();
             for (String validOption : validOptions) {
-                if (validOption.equalsIgnoreCase(input) || (validOptions.length == 1 && "no".equalsIgnoreCase(input))) {
+                if (validOption.equalsIgnoreCase(input)) {
                     return input;
                 }
             }
             System.out.println(errorMessage);
-        }
-    }
-
-    private static int getValidIntInput(Scanner scanner, String prompt, String errorMessage) {
-        while (true) {
-            System.out.println(prompt);
-            try {
-                int input = Integer.parseInt(scanner.nextLine());
-                return input;
-            } catch (NumberFormatException e) {
-                System.out.println(errorMessage);
-            }
         }
     }
 }

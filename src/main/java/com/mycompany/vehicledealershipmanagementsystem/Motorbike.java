@@ -9,20 +9,17 @@ package com.mycompany.vehicledealershipmanagementsystem;
  * @author bethan
  */
 // Motorbike class
-class Motorbike extends Vehicle {
+public class Motorbike extends Vehicle {
     private boolean hasLuggageBox;
 
     public Motorbike(String make, String model, int year, String gearboxType, String color, int mileage, String vin) {
         super(make, model, year, gearboxType, color, mileage, vin);
     }
 
-    public void addLuggageBox() { 
-        this.hasLuggageBox = true; 
-    }
+    public boolean hasLuggageBox() { return hasLuggageBox; }
 
-    public void removeLuggageBox() { 
-        this.hasLuggageBox = false; 
-    }
+    public void addLuggageBox() { this.hasLuggageBox = true; }
+    public void removeLuggageBox() { this.hasLuggageBox = false; }
 
     @Override
     public String toString() {

@@ -9,22 +9,21 @@ package com.mycompany.vehicledealershipmanagementsystem;
  * @author bethan
  */
 // SUV Car class
-class SUV extends Car {
+public class SUV extends Car {
     private boolean hasAllWheelDrive;
 
     public SUV(String make, String model, int year, String gearboxType, String color, int mileage, String vin, String bodyType) {
         super(make, model, year, gearboxType, color, mileage, vin, bodyType);
     }
 
-    public void addAllWheelDrive() {
-        this.hasAllWheelDrive = true;
-    }
+    public boolean hasAllWheelDrive() { return hasAllWheelDrive; }
+
+    public void addAllWheelDrive() { this.hasAllWheelDrive = true; }
 
     @Override
     public String toString() {
         return "SUV{" +
-                "bodyType='" + bodyType + '\'' +
-                ", hasAllWheelDrive=" + hasAllWheelDrive +
+                "hasAllWheelDrive=" + hasAllWheelDrive +
                 ", " + super.toString() +
                 '}';
     }

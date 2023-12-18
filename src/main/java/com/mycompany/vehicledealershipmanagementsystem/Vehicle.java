@@ -9,14 +9,14 @@ package com.mycompany.vehicledealershipmanagementsystem;
  * @author bethan
  */
 // Base Vehicle class
-abstract class Vehicle {
-    protected final String make;
-    protected final String model;
-    protected final int year;
-    protected final String gearboxType;
-    protected String color;
-    protected int mileage;
-    protected final String vin;
+public abstract class Vehicle {
+    private final String make;
+    private final String model;
+    private final int year;
+    private final String gearboxType;
+    private String color;
+    private int mileage;
+    private final String vin;
 
     public Vehicle(String make, String model, int year, String gearboxType, String color, int mileage, String vin) {
         this.make = make;
@@ -28,13 +28,18 @@ abstract class Vehicle {
         this.vin = vin;
     }
 
-    public void updateMileage(int newMileage) {
-        this.mileage = newMileage;
-    }
+    // Getters
+    public String getMake() { return make; }
+    public String getModel() { return model; }
+    public int getYear() { return year; }
+    public String getGearboxType() { return gearboxType; }
+    public String getColor() { return color; }
+    public int getMileage() { return mileage; }
+    public String getVin() { return vin; }
 
-    public void updateColor(String newColor) {
-        this.color = newColor;
-    }
+    // Setters
+    public void setColor(String color) { this.color = color; }
+    public void setMileage(int mileage) { this.mileage = mileage; }
 
     @Override
     public String toString() {
