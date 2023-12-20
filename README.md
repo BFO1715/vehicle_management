@@ -8,7 +8,9 @@ Each vehicle has a make, a model, a year of manufacture (e.g., Volkswagen Golf, 
 As options, all cars could have a sat nav, parking sensors, a tow bar and a roof rack fitted but these options are not available for motorbikes. Motorbikes could have a luggage box fitted (not available for cars). SUVs could be fitted with all-wheel drivetrain and estates could be fitted with a third-row seat. The options for cars may only be added but not removed, however, those for motorbikes may be added or removed at any time.
 
 <strong>Structure</strong><br>
-For the structure of the system, I decided on a Main class for the code to be executed, an abstract Vehicle class for base definition of vehicles and 4 derived classes Car, Motorcycle, SUV, Estate to provide additional behaviours and specific attributes to the relative class. 
+For the structure of the system, I decided on a Main class for the code to be executed, an abstract Vehicle class for base definition of vehicles and 4 derived classes Car, Motorcycle, SUV, Estate to provide additional behaviours and specific attributes to the relative class.
+
+![](images/structure.png)
 
 <strong>Main Class</strong><br>
 
@@ -25,33 +27,33 @@ For the structure of the system, I decided on a Main class for the code to be ex
 
 Entry point for the system providing 3 options:
 
-
+![](images/entry.png)
 
 An error message and request to reselect is displayed if something other than those 3 options is input:
 
-
+![](images/error.png)
 
 The addVehicle methods purpose is to attain details of the vehicle which is to be added to the array: 
 
-
+![](images/addvehicle.png)
 
 The updateVehicle method is used to update the color (colour) or mileage of vehicles already contained in the array by using the respective vin numbers of the vehicle: 
 
- 
+ ![](images/updatevehicle.png)
 
 Methods getValidInput and getYesNoInput displays an error message when the available option is not selected and allows the user to input again:
 
- 
+ ![](images/validation.png)
 
 The array is doubled when the capacity of 10 vehicle objects is reached and a confirmation message is displayed. Upon exiting the system the Print method displays all the vehicle objects contained in the expanded array: 
 
- 
+ ![](images/arrayprint.png)
 
 Each step and option of the system was tested to ensure it operates as intended.
 
 The UML diagram for the Main class is below:
 
- 
+ ![](images/mainuml.png)
 
 <strong>Vehicle Class</strong>
 
@@ -63,7 +65,7 @@ The UML diagram for the Main class is below:
 
 The UML diagram for the Vehicle class is below:
 
- 
+ ![](images/vehicleuml.png)
 
 Car Class
 
@@ -75,7 +77,7 @@ Car Class
 
 The UML diagram for the Car class is below:
  
-
+![](images/caruml.png)
 
 <strong>Motorbike Class</strong>
 
@@ -87,7 +89,7 @@ The UML diagram for the Car class is below:
 
 The UML diagram for the Motorbike class is below:
 
-    
+![](images/motorbikeuml.png)
 
 <strong>SUV Class</strong>
 
@@ -97,9 +99,9 @@ The UML diagram for the Motorbike class is below:
 *	Method to Add All-Wheel Drive: Provides a clear and explicit way to add this feature, which could affect other aspects of the vehicle's behaviour, such as pricing or performance.
 *	ToString Method: Provides accurate description of the vehicle's current configuration, especially for a specialized subclass like SUV.
 
-The UML diagrams for the Car and Motorbike class is below:
+The UML diagram for the UML class is below:
 
- 
+ ![](images/suvuml.png)
 
 <strong>Estate Class</strong>
 
@@ -109,9 +111,9 @@ The UML diagrams for the Car and Motorbike class is below:
 *	Method to Add Third Row Seat: Allowing the addition of this feature aligns with real-world scenarios where car configurations are modified post-purchase.
 *	ToString Method: Overriding this method ensures that any string representation of the Estate car includes all relevant information, including the specific feature of a third-row seat.
 
-The UML diagrams for the Car and Motorbike class is below:
+The UML diagram for the Estate class is below:
 
-   
+  ![](images/estateuml.png) 
 
 <strong>Summary</strong>
 
