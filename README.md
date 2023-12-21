@@ -43,7 +43,7 @@ The updateVehicle method is used to update the color (colour) or mileage of vehi
 
 Methods getValidInput and getYesNoInput displays an error message when the available option is not selected and allows the user to input again:
 
- ![](images/validation.png)
+ ![](images/validate.png)
 
 The array is doubled when the capacity of 10 vehicle objects is reached and a confirmation message is displayed. Upon exiting the system the Print method displays all the vehicle objects contained in the expanded array: 
 
