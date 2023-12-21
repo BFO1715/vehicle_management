@@ -67,7 +67,7 @@ The UML diagram for the Vehicle class is below:
 
  ![](images/vehicleuml.png)
 
-Car Class
+<strong>Car Class</strong>
 
 *	Inheritance: The Car class inherits the fundamental properties of the base vehicle class.
 *	Body Type: Differentiates cars from other vehicle types and among themselves, reflecting real-world differences within car types.
